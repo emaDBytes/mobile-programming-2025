@@ -1,52 +1,80 @@
 // assignment-01-calculator\calculator\components\AddAndSubCalculator.js
 
-import { StyleSheet, Text, View, TextInput, Button } from "react-native";
-import { useState } from "react";
-
 /**
  * A simple calculator component that performs addition and subtraction.
- * It takes two numeric inputs from the user and displays the result.
+ * It takes two numeric inputs from the user, calculates the result, and maintains a history of calculations.
  */
+
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  Button,
+  FlatList,
+} from "react-native";
+
+import { useState } from "react";
+
 export default function AddAndSubCalculator() {
-  // State variables to store input values and the result
+  // State variables for input values, result, and calculation history
   const [firstValue, setFirstValue] = useState("");
   const [secondValue, setSecondValue] = useState("");
   const [result, setResult] = useState("");
+  const [history, setHistory] = useState([]);
 
+  // Function to perform calculations based on the operator
   /**
-   * Handles the addition of the two input values.
-   * Validates inputs to ensure they are numeric.
+   * Performs calculation and updates history.
+   * Uses newResult instead of result state in history calculation
+   * because state updates are asynchronous - result state wouldn't
+   * have the new value when creating history entry.
+   * @param {string} operator - The mathematical operator (+ or -)
    */
-  const handleAdd = () => {
-    const num1 = Number(firstValue);
-    const num2 = Number(secondValue);
-    if (isNaN(num1) || isNaN(num2)) {
-      setResult("Invalid input");
-    } else {
-      setResult(num1 + num2);
-    }
-  };
+  const calculate = (operator) => {
+    const firstNumber = Number(firstValue);
+    const secondNumber = Number(secondValue);
 
-  /**
-   * Handles the subtraction of the second input value from the first.
-   * Validates inputs to ensure they are numeric.
-   */
-  const handleSubtract = () => {
-    const num1 = Number(firstValue);
-    const num2 = Number(secondValue);
-    if (isNaN(num1) || isNaN(num2)) {
-      setResult("Invalid input");
-    } else {
-      setResult(num1 - num2);
+    if (isNaN(firstNumber) || isNaN(secondNumber)) {
+      setResult("Invalid input!");
+      return;
     }
+    let newResult;
+    switch (operator) {
+      case "+":
+        newResult = firstNumber + secondNumber;
+        break;
+
+      case "-":
+        newResult = firstNumber - secondNumber;
+        break;
+
+      default:
+        newResult = "Invalid operator!";
+    }
+
+    setResult(newResult);
+
+    // Update calculation history
+    setHistory([
+      {
+        key: Date.now().toString(),
+        calculation: `${firstNumber} ${operator} ${secondNumber} = ${newResult}`,
+      },
+      ...history,
+    ]);
+
+    // Clear input fields
+    setFirstValue("");
+    setSecondValue("");
   };
 
   return (
     <View style={styles.container}>
-      {/* Display the result of the calculation */}
+      {/* Display the result */}
       <Text style={styles.resultText}>Result: {result}</Text>
 
-      {/* Input field for the first number */}
+      {/* Input fields for numbers */}
       <TextInput
         style={styles.input}
         keyboardType="numeric"
@@ -54,8 +82,6 @@ export default function AddAndSubCalculator() {
         onChangeText={(firstValue) => setFirstValue(firstValue)}
         value={firstValue}
       />
-
-      {/* Input field for the second number */}
       <TextInput
         style={styles.input}
         keyboardType="numeric"
@@ -64,11 +90,20 @@ export default function AddAndSubCalculator() {
         value={secondValue}
       />
 
-      {/* Container for the operation buttons */}
+      {/* Buttons for addition and subtraction */}
       <View style={styles.buttonContainer}>
-        <Button onPress={handleAdd} title="+" />
-        <Button onPress={handleSubtract} title="-" />
+        <Button onPress={() => calculate("+")} title="+" />
+        <Button onPress={() => calculate("-")} title="-" />
       </View>
+
+      {/* Display calculation history */}
+      <FlatList
+        style={styles.list}
+        data={history}
+        renderItem={({ item }) => (
+          <Text style={styles.historyItem}>{item.calculation}</Text>
+        )}
+      />
     </View>
   );
 }
@@ -90,6 +125,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   resultText: {
+    padding: 10,
     fontSize: 18,
     fontWeight: "bold",
   },
@@ -98,5 +134,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     gap: 10,
+  },
+  list: {
+    marginTop: 10,
+    width: "100%",
+  },
+  historyItem: {
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "#ccc",
   },
 });
