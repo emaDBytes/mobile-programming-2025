@@ -12,7 +12,7 @@ A simple React Native app that performs addition and subtraction.
 
 ## Screenshots
 
-![Calculator Screenshot](assignment-01-calculator\calculator\assets\screenshotscalculator.png)
+![Calculator Screenshot](calculator/assets/screenshotscalculator.png)
 
 ## How to Run
 
