@@ -14,9 +14,9 @@ A React Native calculator app that performs basic arithmetic operations and main
 
 ## Screenshots
 
-| Basic Calculator                                                                                        | With History                                                                                                |
-| ------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| ![Basic Calculator](assignments\assignment-01-and-03-calculator\calculator\assets\calculator-basic.png) | ![Calculator History](assignments\assignment-01-and-03-calculator\calculator\assets\calculator-history.png) |
+| Basic Calculator                                            | With History                                                    |
+| ----------------------------------------------------------- | --------------------------------------------------------------- |
+| ![Basic Calculator](calculator/assets/calculator-basic.png) | ![Calculator History](calculator/assets/calculator-history.png) |
 
 ## How to Run
 
