@@ -12,10 +12,22 @@ import {
 
 import { useState } from "react";
 
+/**
+ * ShoppingList Component
+ *
+ * A simple shopping list manager that allows users to add and clear items.
+ * Items are stored in state and displayed in a scrollable list.
+ */
+
 export default function ShoppingList() {
+  // State management for individual item input and the list of items
   const [shoppingItem, setShoppingItem] = useState("");
   const [shoppingList, setShoppingList] = useState([]);
 
+  /**
+   * Handles adding a new item to the shopping list
+   * Validates input and updates state with new item
+   */
   const handleAdd = () => {
     if (!shoppingItem) {
       Alert.alert("Please add a valid item!");
@@ -27,6 +39,10 @@ export default function ShoppingList() {
     ]);
     setShoppingItem("");
   };
+
+  /**
+   * Clears all items from the shopping list
+   */
   const handleClear = () => {
     setShoppingList([]);
   };
@@ -64,6 +80,7 @@ export default function ShoppingList() {
   );
 }
 
+// Styles configuration for the shopping list component
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -96,6 +113,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#f2f2f2",
     borderRadius: 5,
     width: "100%",
+    // Shadow styling for list items
     shadowColor: "#000",
     shadowOffset: {
       width: 0,

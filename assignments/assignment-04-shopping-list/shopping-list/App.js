@@ -5,6 +5,12 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 import ShoppingList from "./components/ShoppingList";
 
+/**
+ * Main App Component
+ *
+ * Provides the root structure for the shopping list application.
+ * Implements SafeAreaView for proper display on modern devices with notches.
+ */
 export default function App() {
   return (
     <SafeAreaProvider>
@@ -17,6 +23,7 @@ export default function App() {
   );
 }
 
+// Base styles for app layout
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
