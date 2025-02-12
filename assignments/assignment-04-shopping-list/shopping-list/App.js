@@ -3,14 +3,14 @@
 import { StyleSheet, View } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
-import ShoppingList from "./component/ShoppingList";
+import ShoppingList from "./components/ShoppingList";
 
 export default function App() {
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.container}>
-          <ShoppingList.js />
+          <ShoppingList />
         </View>
       </SafeAreaView>
     </SafeAreaProvider>
