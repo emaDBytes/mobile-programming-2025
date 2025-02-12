@@ -1,17 +1,28 @@
-// assignment-01-calculator\calculator\components\AddAndSubCalculator.js
+// assignment-01-calculator\calculator\components\Calculator.js
+
+javascriptCopy; // Calculator.js
 
 /**
- * A simple calculator component that performs addition and subtraction.
- * It takes two numeric inputs from the user, calculates the result, and maintains a history of calculations.
+ * Calculator component with basic arithmetic operations and calculation history.
+ *
+ * Features:
+ * - Addition and subtraction operations
+ * - Input validation and error handling
+ * - Calculation history tracking
+ * - Auto-focus on first input after calculation
+ * - Navigation to history view
+ *
+ * @component
+ * @param {Object} navigation - React Navigation prop for screen navigation
  */
 
-import { Text, View, TextInput, Button, FlatList } from "react-native";
+import { Text, View, TextInput, Button } from "react-native";
 
 import { useState, useRef } from "react";
 
 import { globalStyles } from "../styles/globalStyles";
 
-export default function AddAndSubCalculator() {
+function Calculator({ navigation }) {
   // State variables for input values, result, and calculation history
   const [firstValue, setFirstValue] = useState("");
   const [secondValue, setSecondValue] = useState("");
@@ -21,17 +32,22 @@ export default function AddAndSubCalculator() {
   // Reference to implement focus on the first TextInput after each operation
   const firstInputRef = useRef();
 
-  // Function to perform calculations based on the operator
   /**
-   * Performs calculation and updates history.
-   * Uses newResult instead of result state in history calculation
-   * because state updates are asynchronous - result state wouldn't
-   * have the new value when creating history entry.
+   * Performs mathematical calculation and manages calculation state.
+   *
    * @param {string} operator - The mathematical operator (+ or -)
+   * @returns {void}
+   *
+   * Flow:
+   * 1. Validates input numbers
+   * 2. Performs calculation
+   * 3. Updates history
+   * 4. Resets input fields
+   * 5. Refocuses on first input
    */
   const calculate = (operator) => {
-    const firstNumber = Number(firstValue);
-    const secondNumber = Number(secondValue);
+    const firstNumber = parseFloat(firstValue);
+    const secondNumber = parseFloat(secondValue);
 
     if (isNaN(firstNumber) || isNaN(secondNumber)) {
       setResult("Invalid input!");
@@ -49,12 +65,12 @@ export default function AddAndSubCalculator() {
 
       default:
         newResult = "Invalid operator!";
-        return; // Exit the function if the operator is invalid
+        return;
     }
 
     setResult(newResult);
 
-    // Update calculation history
+    // Add new calculation to history
     setHistory([
       {
         key: Date.now().toString(),
@@ -63,11 +79,9 @@ export default function AddAndSubCalculator() {
       ...history,
     ]);
 
-    // Clear input fields
+    // Reset calculator state
     setFirstValue("");
     setSecondValue("");
-
-    // Focus on the first input field
     if (firstInputRef.current) {
       firstInputRef.current.focus();
     }
@@ -95,21 +109,16 @@ export default function AddAndSubCalculator() {
         value={secondValue}
       />
 
-      {/* Buttons for addition and subtraction */}
       <View style={globalStyles.buttonContainer}>
         <Button onPress={() => calculate("+")} title="+" />
         <Button onPress={() => calculate("-")} title="-" />
+        <Button
+          onPress={() => navigation.navigate("History", { history: history })}
+          title="Show History"
+        />
       </View>
-
-      {/* Display calculation history */}
-      <FlatList
-        style={globalStyles.list}
-        data={history}
-        renderItem={({ item }) => (
-          <Text style={globalStyles.listItem}>{item.calculation}</Text>
-        )}
-        keyExtractor={(item) => item.key}
-      />
     </View>
   );
 }
+
+export default Calculator;
