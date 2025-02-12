@@ -7,16 +7,17 @@
  * It renders the AddAndSubCalculator component, which provides basic addition and subtraction functionality.
  */
 
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 import AddAndSubCalculator from "./components/AddAndSubCalculator";
+import { globalStyles } from "./styles/globalStyles";
 
 export default function App() {
   return (
     <SafeAreaProvider>
-      <SafeAreaView style={styles.safeArea}>
-        <View style={styles.container}>
+      <SafeAreaView style={globalStyles.safeArea}>
+        <View style={globalStyles.mainAppContainer}>
           {/* Render the AddAndSubCalculator component */}
           <AddAndSubCalculator />
         </View>
@@ -24,13 +25,3 @@ export default function App() {
     </SafeAreaProvider>
   );
 }
-
-// Styles for the App component
-const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1, // Ensure the SafeAreaView takes up the full screen
-  },
-  container: {
-    flex: 1, // Ensure the container takes up the full screen
-  },
-});

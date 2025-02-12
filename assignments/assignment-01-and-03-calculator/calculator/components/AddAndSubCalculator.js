@@ -5,16 +5,11 @@
  * It takes two numeric inputs from the user, calculates the result, and maintains a history of calculations.
  */
 
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  Button,
-  FlatList,
-} from "react-native";
+import { Text, View, TextInput, Button, FlatList } from "react-native";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
+
+import { globalStyles } from "../styles/globalStyles";
 
 export default function AddAndSubCalculator() {
   // State variables for input values, result, and calculation history
@@ -22,6 +17,9 @@ export default function AddAndSubCalculator() {
   const [secondValue, setSecondValue] = useState("");
   const [result, setResult] = useState("");
   const [history, setHistory] = useState([]);
+
+  // Reference to implement focus on the first TextInput after each operation
+  const firstInputRef = useRef();
 
   // Function to perform calculations based on the operator
   /**
@@ -51,6 +49,7 @@ export default function AddAndSubCalculator() {
 
       default:
         newResult = "Invalid operator!";
+        return; // Exit the function if the operator is invalid
     }
 
     setResult(newResult);
@@ -67,23 +66,29 @@ export default function AddAndSubCalculator() {
     // Clear input fields
     setFirstValue("");
     setSecondValue("");
+
+    // Focus on the first input field
+    if (firstInputRef.current) {
+      firstInputRef.current.focus();
+    }
   };
 
   return (
-    <View style={styles.container}>
+    <View style={globalStyles.container}>
       {/* Display the result */}
-      <Text style={styles.resultText}>Result: {result}</Text>
+      <Text style={globalStyles.resultText}>Result: {result}</Text>
 
       {/* Input fields for numbers */}
       <TextInput
-        style={styles.input}
+        ref={firstInputRef} // Attach the reference to the first TextInput
+        style={globalStyles.inputField}
         keyboardType="numeric"
         placeholder="Enter the first number"
         onChangeText={(firstValue) => setFirstValue(firstValue)}
         value={firstValue}
       />
       <TextInput
-        style={styles.input}
+        style={globalStyles.inputField}
         keyboardType="numeric"
         placeholder="Enter the second number"
         onChangeText={(secondValue) => setSecondValue(secondValue)}
@@ -91,57 +96,20 @@ export default function AddAndSubCalculator() {
       />
 
       {/* Buttons for addition and subtraction */}
-      <View style={styles.buttonContainer}>
+      <View style={globalStyles.buttonContainer}>
         <Button onPress={() => calculate("+")} title="+" />
         <Button onPress={() => calculate("-")} title="-" />
       </View>
 
       {/* Display calculation history */}
       <FlatList
-        style={styles.list}
+        style={globalStyles.list}
         data={history}
         renderItem={({ item }) => (
-          <Text style={styles.historyItem}>{item.calculation}</Text>
+          <Text style={globalStyles.listItem}>{item.calculation}</Text>
         )}
+        keyExtractor={(item) => item.key}
       />
     </View>
   );
 }
-
-// Styles for the component
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#e6d6ba",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-    width: 200,
-    borderRadius: 5,
-  },
-  resultText: {
-    padding: 10,
-    fontSize: 18,
-    fontWeight: "bold",
-  },
-  buttonContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: 10,
-  },
-  list: {
-    marginTop: 10,
-    width: "100%",
-  },
-  historyItem: {
-    padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
-  },
-});
