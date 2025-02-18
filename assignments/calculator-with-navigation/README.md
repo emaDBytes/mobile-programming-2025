@@ -41,12 +41,20 @@ A React Native calculator app that performs basic arithmetic operations and main
 ## Project Structure
 
 ```
-assignment-01-and-03-calculator/
-├── App.js                     # Main application file
-├── components/
-│   └── AddAndSubCalculator.js # Calculator component with history
+calculator-with-navigation
+├── App.js
+├── assets
+│   ├── calculator-basic.png
+│   └── calculator-history.png
+├── components
+│   ├── Calculator.js
+│   └── History.js
+├── index.js
+├── package-lock.json
 ├── package.json
-└── README.md
+├── README.md
+└── styles
+    └── globalStyles.js
 ```
 
 ## Development Journey
