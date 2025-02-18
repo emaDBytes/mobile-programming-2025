@@ -1,4 +1,4 @@
-// assignments\assignment-01-and-03-calculator\calculator\components\History.js
+// assignments\calculator-with-navigation\calculator\components\History.js
 
 /**
  * History component that displays a list of past calculations.

@@ -1,4 +1,4 @@
-// assignment-01-calculator\calculator\App.js
+// assignments\calculator-with-navigation\calculator\App.js
 
 /**
  * Main application component that sets up the navigation and screen layout.

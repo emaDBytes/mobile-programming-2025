@@ -1,6 +1,4 @@
-// assignment-01-calculator\calculator\components\Calculator.js
-
-javascriptCopy; // Calculator.js
+// assignments\calculator-with-navigation\calculator\components\Calculator.js
 
 /**
  * Calculator component with basic arithmetic operations and calculation history.

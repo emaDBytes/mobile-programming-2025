@@ -1,4 +1,4 @@
-// assignments\assignment-01-and-03-calculator\calculator\styles\globalStyles.js
+// assignments\calculator-with-navigation\calculator\styles\globalStyles.js
 
 import { StyleSheet } from "react-native";
 
