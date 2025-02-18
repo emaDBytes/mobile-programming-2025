@@ -63,3 +63,4 @@ This app was developed in two phases:
 
 1. Basic calculator functionality (Assignment 1)
 2. Addition of calculation history feature (Assignment 3)
+3. Implementation of navigation between calculator and history screens (Assignment 5)
